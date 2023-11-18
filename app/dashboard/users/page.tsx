@@ -1,9 +1,14 @@
+import { fetchUsers } from "@/app/lib/data"
 import Pagination from "@/app/ui/dashboard/pagination/Pagination"
 import Search from "@/app/ui/dashboard/search/Search"
 import Image from "next/image"
 import Link from "next/link"
 
-const UsersPage = () => {
+const UsersPage = async ({ searchParams }) => {
+  const q = searchParams?.q || ""
+  const page = searchParams?.page || 1
+  const { count, users } = await fetchUsers(q, page)
+
   return (
     <div className="bg-secondary p-[20px] rounded-[10px] mt-[20px]">
       <div className="flex items-center justify-between">
@@ -27,43 +32,45 @@ const UsersPage = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <div className="flex gap-[10px] items-center">
-                <Image
-                  src={"/no-avatar.webp"}
-                  alt="user-img"
-                  width={40}
-                  height={40}
-                  className="rounded-full object-cover"
-                />
-                Pariwesh Tamrakar
-              </div>
-            </td>
-            <td>pariwesh@gmail.com</td>
-            <td>13/01/2023</td>
-            <td>Admin</td>
-            <td>active</td>
-            <td>
-              <div className="flex gap-[10px]">
-                <Link href={"/dashboard/users/id"}>
+          {users?.map((user) => (
+            <tr key={user?._id}>
+              <td>
+                <div className="flex gap-[10px] items-center">
+                  <Image
+                    src={user?.photo || "/no-avatar.webp"}
+                    alt="user-img"
+                    width={40}
+                    height={40}
+                    className="rounded-full object-cover"
+                  />
+                  {user?.username}
+                </div>
+              </td>
+              <td>{user?.email}</td>
+              <td>{user?.createdAt?.toString().slice(4, 16)}</td>
+              <td>{user?.isAdmin ? "Admin" : "Staff"}</td>
+              <td>{user?.isActive ? "active" : "inactive"}</td>
+              <td>
+                <div className="flex gap-[10px]">
+                  <Link href={`/dashboard/users/${user?._id}`}>
+                    <button
+                      className={`p-[5px_10px] rounded-[5px] text-textColor border-none cursor-pointer bg-[teal]`}
+                    >
+                      View
+                    </button>
+                  </Link>
                   <button
-                    className={`p-[5px_10px] rounded-[5px] text-textColor border-none cursor-pointer bg-[teal]`}
+                    className={`p-[5px_10px] rounded-[5px] text-textColor border-none cursor-pointer bg-[crimson]`}
                   >
-                    View
+                    Delete
                   </button>
-                </Link>
-                <button
-                  className={`p-[5px_10px] rounded-[5px] text-textColor border-none cursor-pointer bg-[crimson]`}
-                >
-                  Delete
-                </button>
-              </div>
-            </td>
-          </tr>
+                </div>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
-      <Pagination />
+      <Pagination count={count} />
     </div>
   )
 }
