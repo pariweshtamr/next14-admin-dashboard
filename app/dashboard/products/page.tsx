@@ -46,7 +46,7 @@ const ProductsPage = () => {
             <td>10</td>
             <td>
               <div className="flex gap-[10px]">
-                <Link href={"/"}>
+                <Link href={"/dashboard/products/productId"}>
                   <button
                     className={`p-[5px_10px] rounded-[5px] text-textColor border-none cursor-pointer bg-[teal]`}
                   >

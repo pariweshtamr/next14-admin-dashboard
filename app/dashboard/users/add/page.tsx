@@ -7,32 +7,32 @@ const AddUserPage = () => {
           placeholder="username"
           name="username"
           required
-          className="w-[45%]"
+          className="w-[48%]"
         />
         <input
           type="email"
           placeholder="email"
           name="email"
-          className="w-[45%]"
+          className="w-[48%]"
         />
         <input
           type="password"
           placeholder="password"
           name="password"
-          className="w-[45%]"
+          className="w-[48%]"
         />
         <input
           type="phone"
           placeholder="phone"
           name="phone"
-          className="w-[45%]"
+          className="w-[48%]"
         />
-        <select name="isAdmin" id="isAdmin" className="w-[45%]">
+        <select name="isAdmin" id="isAdmin" className="w-[48%]">
           <option value="">Is Admin?</option>
           <option value="yes">Yes</option>
           <option value="no">No</option>
         </select>
-        <select name="isActive" id="isActive" className="w-[45%]">
+        <select name="isActive" id="isActive" className="w-[48%]">
           <option value="">Is Active?</option>
           <option value="yes">Yes</option>
           <option value="no">No</option>
