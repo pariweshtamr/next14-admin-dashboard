@@ -1,7 +1,9 @@
+import { addProduct } from "@/app/lib/actions"
+
 const AddProductPage = () => {
   return (
     <div className="bg-secondary p-[20px] rounded-[10px] mt-[20px]">
-      <form className="flex flex-wrap justify-between">
+      <form action={addProduct} className="flex flex-wrap justify-between">
         <input
           type="text"
           placeholder="title"

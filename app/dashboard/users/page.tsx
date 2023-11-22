@@ -1,12 +1,17 @@
+import { deleteUser } from "@/app/lib/actions"
 import { fetchUsers } from "@/app/lib/data"
 import Pagination from "@/app/ui/dashboard/pagination/Pagination"
 import Search from "@/app/ui/dashboard/search/Search"
 import Image from "next/image"
 import Link from "next/link"
 
-const UsersPage = async ({ searchParams }) => {
-  const q = searchParams?.q || ""
-  const page = searchParams?.page || 1
+const UsersPage = async ({
+  searchParams,
+}: {
+  searchParams: Record<string, string | undefined>
+}) => {
+  const q = searchParams?.q ?? ""
+  const page = parseInt(searchParams?.page ?? "1")
   const { count, users } = await fetchUsers(q, page)
 
   return (
@@ -59,11 +64,18 @@ const UsersPage = async ({ searchParams }) => {
                       View
                     </button>
                   </Link>
-                  <button
-                    className={`p-[5px_10px] rounded-[5px] text-textColor border-none cursor-pointer bg-[crimson]`}
-                  >
-                    Delete
-                  </button>
+                  <form action={deleteUser}>
+                    <input
+                      type="hidden"
+                      name="_id"
+                      value={user?._id.toString()}
+                    />
+                    <button
+                      className={`p-[5px_10px] rounded-[5px] text-textColor border-none cursor-pointer bg-[crimson]`}
+                    >
+                      Delete
+                    </button>
+                  </form>
                 </div>
               </td>
             </tr>
